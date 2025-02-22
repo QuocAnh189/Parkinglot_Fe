@@ -1,4 +1,9 @@
+import { useAppSelector } from "@redux/hook";
+
 function App() {
+  const user = useAppSelector((state) => state.auth.auth?.user);
+  console.log(user);
+
   return (
     <div className="h-screen w-full flex items-center justify-center bg-red-300">
       <h1 className="text-3xl font-bold underline">
