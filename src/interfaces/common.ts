@@ -1,3 +1,9 @@
+export interface ILink {
+  name: string;
+  icon: any;
+  path: string;
+}
+
 export interface IListData<T> {
   items: T[];
   metadata: IMetadata;

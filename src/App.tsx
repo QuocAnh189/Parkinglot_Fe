@@ -1,15 +1,31 @@
-import { useAppSelector } from "@redux/hook";
+import { Suspense, lazy } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./layouts";
+
+//page
+const LoginPage = lazy(() => import("@pages/auth/SignIn"));
+const RegisterPage = lazy(() => import("@pages/auth/SignUp"));
+const DetectPage = lazy(() => import("@pages/detect/Detect"));
+const ManagementPage = lazy(() => import("@pages/manage/Manage"));
+
+//component
+import Loader from "@components/common/Loader";
 
 function App() {
-  const user = useAppSelector((state) => state.auth.auth?.user);
-  console.log(user);
-
   return (
-    <div className="h-screen w-full flex items-center justify-center bg-red-300">
-      <h1 className="text-3xl font-bold underline">
-        {import.meta.env.VITE_API_URL}
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/signup" element={<RegisterPage />} />
+          <Route path="/main" element={<Layout />}>
+            <Route path="/main/detect" element={<DetectPage />} />
+            <Route path="/main/management" element={<ManagementPage />} />
+            {/* <Route path="/main/setting" element={<RFID />} /> */}
+          </Route>
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
 }
 

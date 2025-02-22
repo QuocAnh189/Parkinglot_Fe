@@ -26,6 +26,7 @@
       "@constants/*": ["constants/*"],
       "@interfaces/*": ["interfaces/*"],
       "@layouts/*": ["layouts/*"],
+      "@libs/*": ["libs/*"],
       "@pages/*": ["pages/*"],
       "@redux/*": ["redux/*"],
       "@utils/*": ["utils/*"]
