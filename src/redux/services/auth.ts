@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SingInPayload, SignUpPayload, IAuth } from "@interfaces/auth";
+import { IAuth, SingInPayload } from "@interfaces/auth";
 
 export const apiAuth = createApi({
   reducerPath: "apiAuth",
@@ -9,7 +9,7 @@ export const apiAuth = createApi({
   keepUnusedDataFor: 20,
 
   endpoints: (builder) => ({
-    signUp: builder.mutation<IAuth, SignUpPayload>({
+    signUp: builder.mutation<IAuth, FormData>({
       query: (data) => ({
         url: "/auth/signup",
         method: "POST",

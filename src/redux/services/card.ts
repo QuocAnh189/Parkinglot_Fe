@@ -23,13 +23,14 @@ export const apiCard = createApi({
       return headers;
     },
   }),
-  keepUnusedDataFor: 20,
+  keepUnusedDataFor: 1,
   tagTypes: ["Card"],
   endpoints: (builder) => ({
     getCards: builder.query<IListData<ICard>, IListCardRequest>({
-      query: () => ({
-        url: "/cars",
+      query: (params) => ({
+        url: "/cards/",
         method: "GET",
+        params,
       }),
       transformResponse: (response: any) => response.data,
       transformErrorResponse: (error) => error.data,

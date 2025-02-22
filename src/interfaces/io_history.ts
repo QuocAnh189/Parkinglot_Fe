@@ -13,7 +13,7 @@ export interface IIOHistory {
 }
 
 export interface IListIOHistoryRequest {
-  type: ETypeHistory;
+  type: string;
   card_type: string;
   vehicle_type: string;
   page: number;

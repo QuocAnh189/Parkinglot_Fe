@@ -7,12 +7,20 @@ import { useAppDispatch } from "@redux/hook";
 import { useSignInMutation } from "@redux/services/auth";
 import { setAuth } from "@redux/slices/auth";
 
-//component
-// import { toast } from "@/components/ui/use-toast";
-// import { cn } from "@/lib/utils";
+//components
+import { toast, ToastContainer } from "react-toastify";
 
 //assets
-import logo from "@/assets/logo.png";
+import logo from "@assets/logo.png";
+
+//interfaces
+import { SingInPayload } from "@interfaces/auth";
+import Loader from "@components/common/Loader";
+
+const initForm: SingInPayload = {
+  email: "",
+  password: "",
+};
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -20,12 +28,15 @@ const SignIn = () => {
 
   const [Login, { isLoading }] = useSignInMutation();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [form, setForm] = useState<SingInPayload>(initForm);
+
+  const handleChangeForm = (name: string, value: any) => {
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleLogin = async () => {
     try {
-      const result = await Login({ email, password }).unwrap();
+      const result = await Login(form).unwrap();
 
       if (result) {
         dispatch(setAuth(result));
@@ -36,18 +47,16 @@ const SignIn = () => {
             refreshToken: result.refreshToken,
           })
         );
+        localStorage.setItem("user", JSON.stringify(result.user));
+        toast.success("Login successfully", {
+          autoClose: 200,
+        });
         navigate("/main");
       }
-    } catch {
-      // toast({
-      //   className: cn(
-      //     "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
-      //   ),
-      //   title: "Login",
-      //   description: "Login fail, please try again",
-      //   duration: 3000,
-      //   variant: "destructive",
-      // });
+    } catch (e: any) {
+      toast.error(e.data.message, {
+        autoClose: 400,
+      });
     }
   };
 
@@ -69,14 +78,14 @@ const SignIn = () => {
                   Your email
                 </label>
                 <input
-                  value={email}
+                  value={form.email}
                   type="email"
                   name="email"
                   id="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    handleChangeForm("email", e.target.value);
                   }}
                 />
               </div>
@@ -85,12 +94,12 @@ const SignIn = () => {
                   Password
                 </label>
                 <input
-                  value={password}
+                  value={form.password}
                   type="password"
                   name="password"
                   id="password"
                   onChange={(e) => {
-                    setPassword(e.target.value);
+                    handleChangeForm("password", e.target.value);
                   }}
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -131,12 +140,17 @@ const SignIn = () => {
                   }}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  Sign up
+                  {isLoading ? (
+                    <Loader width="20px" height="20px" />
+                  ) : (
+                    "Create an account"
+                  )}
                 </button>
               </p>
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </section>
   );

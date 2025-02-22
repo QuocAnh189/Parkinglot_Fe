@@ -9,8 +9,8 @@ export enum ECardType {
 }
 
 export enum EVehicleType {
-  MONTH = "MOTORBIKE",
-  DAY = "CAR",
+  MOTORBIKE = "MOTORBIKE",
+  CAR = "CAR",
 }
 
 export enum ETypeHistory {

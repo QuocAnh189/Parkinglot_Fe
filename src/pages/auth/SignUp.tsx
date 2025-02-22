@@ -2,16 +2,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// //compnnets
-// import { useToast } from "@/components/ui/use-toast";
-// import { cn } from "@/lib/utils";
-
 //redux
 import { useSignUpMutation } from "@redux/services/auth";
 
+//components
+import { toast, ToastContainer } from "react-toastify";
+import Loader from "@components/common/Loader";
+
 //asset
-import logo from "@/assets/logo.png";
+import logo from "@assets/logo.png";
+
+//interfaces
 import { SignUpPayload } from "@interfaces/auth";
+import { setAuth } from "@redux/slices/auth";
+import { useAppDispatch } from "@redux/hook";
 
 const initForm: SignUpPayload = {
   email: "",
@@ -22,7 +26,7 @@ const initForm: SignUpPayload = {
 
 const SignUp = () => {
   const navigate = useNavigate();
-  // const { toast } = useToast();
+  const dispatch = useAppDispatch();
 
   const [form, setForm] = useState<SignUpPayload>(initForm);
 
@@ -33,30 +37,34 @@ const SignUp = () => {
   };
 
   const handleRegister = async () => {
+    const formData = new FormData();
+    formData.append("email", form.email);
+    formData.append("name", form.name);
+    formData.append("password", form.password);
+    formData.append("avatar", form.avatar);
+
     try {
-      const result = await Register(form).unwrap();
+      const result = await Register(formData).unwrap();
 
       if (result) {
-        // toast({
-        //   className: cn(
-        //     "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
-        //   ),
-        //   title: "Register",
-        //   description: "SignUp successfully, please Login",
-        //   duration: 3000,
-        // });
+        dispatch(setAuth(result));
+        localStorage.setItem(
+          "token",
+          JSON.stringify({
+            accessToken: result.accessToken,
+            refreshToken: result.refreshToken,
+          })
+        );
+        localStorage.setItem("user", JSON.stringify(result.user));
+        toast.success("Register successfully", {
+          autoClose: 200,
+        });
+        navigate("/main");
       }
-    } catch (e) {
-      // toast({
-      //   className: cn(
-      //     "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
-      //   ),
-      //   title: "Register Fail",
-      //   description: "Some thing went wrong, please try again",
-      //   duration: 3000,
-      //   variant: "destructive",
-      // });
-      console.log(e);
+    } catch (e: any) {
+      toast.error(e.data.message, {
+        autoClose: 400,
+      });
     }
   };
 
@@ -142,7 +150,11 @@ const SignUp = () => {
                 onClick={handleRegister}
                 className="w-full text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                Create an account
+                {isLoading ? (
+                  <Loader width="20px" height="20px" />
+                ) : (
+                  "Create an account"
+                )}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
@@ -158,6 +170,7 @@ const SignUp = () => {
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </section>
   );

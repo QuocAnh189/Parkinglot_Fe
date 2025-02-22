@@ -6,8 +6,11 @@ ENV VITE_API_URL=$VITE_API_URL
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install --frozen-lockfile
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies with forced architecture
+RUN npm install --legacy-peer-deps
 
 COPY . .
 RUN npm run build

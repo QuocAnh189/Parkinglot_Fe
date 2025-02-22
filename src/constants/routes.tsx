@@ -1,19 +1,23 @@
 import { IoMdHome } from "react-icons/io";
 import { MdManageSearch } from "react-icons/md";
-import { CiSettings } from "react-icons/ci";
 
 const routes = [
   { name: "Trang chủ", icon: <IoMdHome color="black" />, path: "/main" },
   {
-    name: "Danh sách quản lý",
+    name: "Danh sách quản lý thẻ",
     icon: <MdManageSearch color="black" />,
-    path: "/main/management",
+    path: "/main/manage-card",
   },
   {
-    name: "Cài đặt",
-    icon: <CiSettings color="black" />,
-    path: "/main/setting",
+    name: "Lịch sử vào ra",
+    icon: <MdManageSearch color="black" />,
+    path: "/main/manage-io",
   },
+  // {
+  //   name: "Cài đặt",
+  //   icon: <CiSettings color="black" />,
+  //   path: "/main/setting",
+  // },
 ];
 
 export default routes;

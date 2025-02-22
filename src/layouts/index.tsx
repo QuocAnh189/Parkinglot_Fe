@@ -4,20 +4,22 @@ import routes from "@constants/routes";
 
 //component
 import Link from "@components/common/Link";
-// import AvatarUser from "@components/common/Avatar";
+import AvatarUser from "@components/common/Avatar";
 
-import { useAppDispatch, useAppSelector } from "@redux/hook";
+import { useAppDispatch } from "@redux/hook";
 import { setAuth } from "@redux/slices/auth";
-// import { Button } from "@components/ui/button";
+
+import { Button } from "@components/ui/button";
 
 const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const user = useAppSelector((state: any) => state.user?.user);
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const handleLogout = () => {
     dispatch(setAuth(null));
+    localStorage.removeItem("token");
     navigate("/");
   };
 
@@ -31,13 +33,13 @@ const Layout = () => {
         </div>
 
         <div className="flex items-center gap-6">
-          {/* <div className="flex items-center gap-2 hover:cursor-pointer">
-            <AvatarUser />
-            <p>{user?.username}</p>
+          <div className="flex items-center gap-2 hover:cursor-pointer">
+            <AvatarUser avatar_url={user?.avatar_url} />
+            <p>{user?.name}</p>
           </div>
           <Button onClick={handleLogout} className="hover:cursor-pointer">
             Logout
-          </Button> */}
+          </Button>
         </div>
       </header>
       <Outlet />

@@ -12,6 +12,15 @@ export const apiInOut = createApi({
   reducerPath: "apiInOut",
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
+    prepareHeaders: (headers) => {
+      const token = JSON.parse(localStorage.getItem("token")!)?.accessToken;
+
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
   keepUnusedDataFor: 20,
   tagTypes: ["InOut"],
@@ -19,7 +28,7 @@ export const apiInOut = createApi({
     getIOHistories: builder.query<IListData<IIOHistory>, IListIOHistoryRequest>(
       {
         query: (params) => ({
-          url: "/io-histories",
+          url: "/io-histories/",
           method: "GET",
           params,
         }),

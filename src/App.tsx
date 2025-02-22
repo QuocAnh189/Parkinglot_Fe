@@ -6,7 +6,8 @@ import Layout from "./layouts";
 const LoginPage = lazy(() => import("@pages/auth/SignIn"));
 const RegisterPage = lazy(() => import("@pages/auth/SignUp"));
 const DetectPage = lazy(() => import("@pages/detect/Detect"));
-const ManagementPage = lazy(() => import("@pages/manage/Manage"));
+const ManagementCard = lazy(() => import("@pages/manage/ManageCard"));
+const ManagementIO = lazy(() => import("@pages/manage/ManageIO"));
 
 //component
 import Loader from "@components/common/Loader";
@@ -19,8 +20,9 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/main" element={<Layout />}>
-            <Route path="/main/detect" element={<DetectPage />} />
-            <Route path="/main/management" element={<ManagementPage />} />
+            <Route path="/main" element={<DetectPage />} />
+            <Route path="/main/manage-card" element={<ManagementCard />} />
+            <Route path="/main/manage-io" element={<ManagementIO />} />
             {/* <Route path="/main/setting" element={<RFID />} /> */}
           </Route>
         </Routes>
