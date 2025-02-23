@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 
 //table
 import {
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -16,6 +13,7 @@ import {
 
 //component
 import { Input } from "@components/ui/input";
+import { Label } from "@components/ui/label";
 import {
   Select,
   SelectTrigger,
@@ -29,7 +27,6 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
 } from "@components/ui/dropdown-menu";
-import { Label } from "@components/ui/label";
 import {
   Table,
   TableBody,
@@ -39,6 +36,7 @@ import {
   TableRow,
 } from "@components/ui/table";
 import ButtonAdd from "./Modal";
+import Paging from "./Pagination";
 
 //constant
 import { columnsCard } from "@constants/columns_card";
@@ -51,7 +49,6 @@ import { ECardType, EVehicleType } from "@constants/enum";
 
 //utils
 import { useDebounce } from "@utils/useDebounce";
-import Paging from "./Pagination";
 
 const initParams: IListCardRequest = {
   search: "",
@@ -65,11 +62,6 @@ const initParams: IListCardRequest = {
 };
 
 const DataTableManageCard = () => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
   const [params, setParams] = useState(initParams);
   const [search, setSearch] = useState<string>("");
   const debouncedSearchTerm = useDebounce(search, 500);
@@ -86,19 +78,14 @@ const DataTableManageCard = () => {
   const table = useReactTable({
     data: cards ? cards.items : [],
     columns: columnsCard,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
+    initialState: {
+      pagination: {
+        pageSize: params.size,
+      },
     },
   });
 

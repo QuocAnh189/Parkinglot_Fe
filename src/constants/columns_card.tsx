@@ -56,7 +56,7 @@ export const columnsCard: ColumnDef<ICard | IIOHistory | any>[] = [
     cell: ({ row }) => (
       <div className="capitalize">
         {row.getValue("card_type") === ECardType.MONTH && "Thẻ tháng"}
-        {row.getValue("vehicle_type") === ECardType.DAY && "Thẻ ngày"}
+        {row.getValue("card_type") === ECardType.DAY && "Thẻ ngày"}
       </div>
     ),
   },

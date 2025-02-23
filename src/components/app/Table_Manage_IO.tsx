@@ -3,9 +3,6 @@ import { useState } from "react";
 
 //table
 import {
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -47,10 +44,6 @@ import { useGetIOHistoriesQuery } from "@redux/services/in_out";
 import { ECardType, EVehicleType } from "@constants/enum";
 import Paging from "./Pagination";
 
-//redux
-// import { useDeleteAllInOutMutation } from "@redux/services/in_out";
-// import { Skeleton } from "../ui/skeleton";
-
 const initParams: IListIOHistoryRequest = {
   type: "",
   card_type: "",
@@ -63,13 +56,6 @@ const initParams: IListIOHistoryRequest = {
 };
 
 const DataTableManageIO = () => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-
-  // const [DeleteInOut, { isLoading }] = useDeleteAllInOutMutation();
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-
   const [params, setParams] = useState<IListIOHistoryRequest>(initParams);
 
   const { data: io_histories } = useGetIOHistoriesQuery(params);
@@ -77,20 +63,10 @@ const DataTableManageIO = () => {
   const table = useReactTable({
     data: io_histories ? io_histories.items : [],
     columns: columnsIO,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
     initialState: {
       pagination: {
         pageSize: params.size,
