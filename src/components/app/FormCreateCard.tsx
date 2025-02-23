@@ -19,15 +19,17 @@ import { BiRfid } from "react-icons/bi";
 
 //interface
 import { ECardType, EVehicleType } from "@constants/enum";
+import { CreateCardPayload, UpdateCardPayload } from "@interfaces/card";
 
-interface IProp {
+interface IProps {
+  formCard: UpdateCardPayload | CreateCardPayload;
   handleChangeForm: (name: string, value: any) => void;
 }
 
-const FormCreateCard = (props: IProp) => {
-  const { handleChangeForm } = props;
+const FormCreateCard = (props: IProps) => {
+  const { handleChangeForm, formCard } = props;
 
-  const [serialCard, setSerialCard] = useState("");
+  const [serialCard, setSerialCard] = useState(formCard.rfid);
   const [openCardReaderWindow, setOpenCardReaderWindow] =
     useState<boolean>(false);
 
@@ -41,7 +43,7 @@ const FormCreateCard = (props: IProp) => {
 
   useEffect(() => {
     if (serialCard) {
-      handleChangeForm("uid", serialCard);
+      handleChangeForm("rfid", serialCard);
     }
   }, [serialCard]);
 
@@ -76,6 +78,7 @@ const FormCreateCard = (props: IProp) => {
           Tên chủ thẻ
         </Label>
         <Input
+          value={formCard.owner_name}
           className="col-span-3"
           name="owner_name"
           onChange={(e: any) => {
@@ -93,6 +96,7 @@ const FormCreateCard = (props: IProp) => {
           onValueChange={(value: EVehicleType) => {
             handleChangeForm("vehicle_type", value);
           }}
+          value={formCard.vehicle_type}
         >
           <SelectTrigger className="w-[277px]">
             <SelectValue placeholder="Chọn loại xe" />
@@ -113,8 +117,9 @@ const FormCreateCard = (props: IProp) => {
         <Select
           name="vehicle_type"
           onValueChange={(value: EVehicleType) => {
-            handleChangeForm("vehicle_type", value);
+            handleChangeForm("card_type", value);
           }}
+          value={formCard.card_type}
         >
           <SelectTrigger className="w-[277px]">
             <SelectValue placeholder="Chọn loại thẻ" />
@@ -133,6 +138,7 @@ const FormCreateCard = (props: IProp) => {
           Biển số xe
         </Label>
         <Input
+          value={formCard.license_plate}
           name="license_plate"
           className="col-span-3"
           onChange={(e) => {
@@ -146,14 +152,12 @@ const FormCreateCard = (props: IProp) => {
           Hạn thẻ
         </Label>
         <Input
+          value={formCard.expired_date}
           name="exp_date"
           className="col-span-3"
           type="date"
           onChange={(e) => {
-            handleChangeForm(
-              "exp_date",
-              new Date(e.target.value).toISOString()
-            );
+            handleChangeForm("expired_date", e.target.value);
           }}
         />
       </div>

@@ -49,7 +49,7 @@ export const apiCard = createApi({
 
     createCard: builder.mutation<boolean, CreateCardPayload>({
       query: (data) => ({
-        url: "/cards",
+        url: "/cards/",
         method: "POST",
         body: data,
       }),
@@ -71,7 +71,7 @@ export const apiCard = createApi({
 
     deleteCard: builder.mutation<boolean, string>({
       query: (id) => ({
-        url: `/cards/${id}/`,
+        url: `/cards/${id}`,
         method: "DELETE",
       }),
       transformResponse: (response: any) => response.data,

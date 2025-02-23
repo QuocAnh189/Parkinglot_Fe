@@ -141,7 +141,7 @@ const SignIn = () => {
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   {isLoading ? (
-                    <Loader width="20px" height="20px" />
+                    <Loader width="20" height="20" />
                   ) : (
                     "Create an account"
                   )}

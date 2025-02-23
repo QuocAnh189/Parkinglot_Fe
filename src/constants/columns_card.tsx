@@ -22,7 +22,10 @@ import { ECardType, EVehicleType } from "./enum";
 //util
 import dayjs from "dayjs";
 
-export const columnsCard: ColumnDef<ICard | IIOHistory | any>[] = [
+export const columnsCard = (
+  handleDelete: (id: string) => void,
+  handleUpdate: (id: string) => void
+): ColumnDef<ICard | IIOHistory | any>[] => [
   {
     id: "select",
     header: ({ table }) => (
@@ -107,9 +110,7 @@ export const columnsCard: ColumnDef<ICard | IIOHistory | any>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
-      // const payment = row.original;
-
+    cell: ({ row }) => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -122,8 +123,13 @@ export const columnsCard: ColumnDef<ICard | IIOHistory | any>[] = [
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            {/* <DropdownMenuItem>Edit</DropdownMenuItem> */}
+            <DropdownMenuItem onClick={() => handleUpdate(row.original.id)}>
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDelete(row.original.id)}>
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

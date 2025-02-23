@@ -35,12 +35,12 @@ import {
   TableHeader,
   TableRow,
 } from "@components/ui/table";
-import ButtonAdd from "./Modal";
+import ModalCreate from "./ModalCreate";
 import Paging from "./Pagination";
 
 //constant
 import { columnsCard } from "@constants/columns_card";
-import { useGetCardsQuery } from "@redux/services/card";
+import { useGetCardsQuery, useDeleteCardMutation } from "@redux/services/card";
 
 // //interface
 // import { ICard } from "@interfaces/card";
@@ -49,6 +49,8 @@ import { ECardType, EVehicleType } from "@constants/enum";
 
 //utils
 import { useDebounce } from "@utils/useDebounce";
+import { toast, ToastContainer } from "react-toastify";
+import ModalUpdate from "./ModalUpdate";
 
 const initParams: IListCardRequest = {
   search: "",
@@ -62,11 +64,14 @@ const initParams: IListCardRequest = {
 };
 
 const DataTableManageCard = () => {
+  const [isOpenUpdate, setIsOpenUpdate] = useState<boolean>(false);
+  const [currentCardId, setCurrentCardId] = useState("");
   const [params, setParams] = useState(initParams);
   const [search, setSearch] = useState<string>("");
   const debouncedSearchTerm = useDebounce(search, 500);
 
   const { data: cards } = useGetCardsQuery(params);
+  const [DeleteCard] = useDeleteCardMutation();
 
   useEffect(() => {
     setParams({
@@ -75,9 +80,25 @@ const DataTableManageCard = () => {
     });
   }, [debouncedSearchTerm]);
 
+  const handleDelete = async (id: string) => {
+    try {
+      const result = await DeleteCard(id).unwrap();
+      if (result) {
+        toast.success("Xóa thẻ thành công", { autoClose: 300 });
+      }
+    } catch (e: any) {
+      toast.error(e.data.message);
+    }
+  };
+
+  const handleUpdate = (id: string) => {
+    setCurrentCardId(id);
+    setIsOpenUpdate(true);
+  };
+
   const table = useReactTable({
     data: cards ? cards.items : [],
-    columns: columnsCard,
+    columns: columnsCard(handleDelete, handleUpdate),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -151,7 +172,7 @@ const DataTableManageCard = () => {
             </Select>
           </div>
         </div>
-        <ButtonAdd />
+        <ModalCreate />
         <div className="space-x-5">
           <Input
             placeholder="Tìm kiếm..."
@@ -237,6 +258,14 @@ const DataTableManageCard = () => {
           <Paging metadata={cards?.metadata} onChange={handleChangePage} />
         )}
       </div>
+      <ToastContainer autoClose={300} />
+      {isOpenUpdate && (
+        <ModalUpdate
+          isOpen={isOpenUpdate}
+          setIsOpen={setIsOpenUpdate}
+          cardId={currentCardId}
+        />
+      )}
     </div>
   );
 };

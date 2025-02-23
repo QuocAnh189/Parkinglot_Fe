@@ -41,4 +41,5 @@ export interface UpdateCardPayload {
   vehicle_type: EVehicleType;
   license_plate: string;
   expired_date: string;
+  last_io_history_id: null | string;
 }
