@@ -13,6 +13,7 @@ import {
 } from "@components/ui/dialog";
 import FormCreateCard from "./FormCreateCard";
 import { toast, ToastContainer } from "react-toastify";
+import Loading from "@components/common/Loading";
 
 //icon
 import { Plus } from "lucide-react";
@@ -22,8 +23,9 @@ import { CreateCardPayload } from "@interfaces/card";
 
 //redux
 import { useCreateCardMutation } from "@redux/services/card";
+
+//enum
 import { ECardType, EVehicleType } from "@constants/enum";
-import Loader from "@components/common/Loader";
 
 const initForm: CreateCardPayload = {
   rfid: "",
@@ -78,7 +80,7 @@ const ModalCreate = () => {
           />
           <DialogFooter>
             <Button disabled={isLoading} type="button" onClick={handleSubmit}>
-              {isLoading ? <Loader width="20" height="20" /> : "Thêm"}
+              {isLoading ? <Loading /> : "Thêm"}
             </Button>
           </DialogFooter>
         </DialogContent>

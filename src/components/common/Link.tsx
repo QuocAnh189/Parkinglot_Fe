@@ -9,8 +9,9 @@ interface IProps {
 }
 
 const Link = (props: IProps) => {
-  const navigate = useNavigate();
   const { link } = props;
+
+  const navigate = useNavigate();
 
   return (
     <button

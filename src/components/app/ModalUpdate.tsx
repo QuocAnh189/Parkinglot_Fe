@@ -12,6 +12,7 @@ import {
 } from "@components/ui/dialog";
 import FormCreateCard from "./FormCreateCard";
 import { toast, ToastContainer } from "react-toastify";
+import Loading from "@components/common/Loading";
 
 //interface
 import { UpdateCardPayload } from "@interfaces/card";
@@ -19,7 +20,6 @@ import { UpdateCardPayload } from "@interfaces/card";
 //redux
 import { useUpdateCardMutation, useGetCardQuery } from "@redux/services/card";
 import { ECardType, EVehicleType } from "@constants/enum";
-import Loader from "@components/common/Loader";
 
 const initForm: UpdateCardPayload = {
   id: "",
@@ -94,7 +94,7 @@ const ModalUpdate = (props: IProps) => {
           )}
           <DialogFooter>
             <Button disabled={isLoading} type="button" onClick={handleSubmit}>
-              {isLoading ? <Loader width="20" height="20" /> : "Cập nhập"}
+              {isLoading ? <Loading /> : "Cập nhập"}
             </Button>
           </DialogFooter>
         </DialogContent>

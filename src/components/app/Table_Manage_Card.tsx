@@ -37,20 +37,19 @@ import {
 } from "@components/ui/table";
 import ModalCreate from "./ModalCreate";
 import Paging from "./Pagination";
+import ModalUpdate from "./ModalUpdate";
+import { toast, ToastContainer } from "react-toastify";
 
 //constant
 import { columnsCard } from "@constants/columns_card";
 import { useGetCardsQuery, useDeleteCardMutation } from "@redux/services/card";
 
-// //interface
-// import { ICard } from "@interfaces/card";
+//interface
 import { IListCardRequest } from "@interfaces/card";
 import { ECardType, EVehicleType } from "@constants/enum";
 
 //utils
 import { useDebounce } from "@utils/useDebounce";
-import { toast, ToastContainer } from "react-toastify";
-import ModalUpdate from "./ModalUpdate";
 
 const initParams: IListCardRequest = {
   search: "",

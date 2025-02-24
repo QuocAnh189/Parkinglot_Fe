@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 interface IProps {
   avatar_url?: string;
 }
+
 const AvatarUser = (props: IProps) => {
   const { avatar_url } = props;
   return (

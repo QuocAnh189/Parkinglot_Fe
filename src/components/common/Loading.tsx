@@ -1,13 +1,13 @@
-const Loader = () => {
+const Loading = () => {
   return (
-    <div className="flex h-screen justify-center items-center">
-      <div className="w-[150px] h-[150px] text-accent">
+    <div className="flex justify-center items-center">
+      <div className="w-[20px] h-[20px] text-accent">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 100 100"
           preserveAspectRatio="xMidYMid"
-          width="200"
-          height="200"
+          width="20"
+          height="20"
         >
           <g>
             <g transform="translate(50 50)">
@@ -34,4 +34,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default Loading;

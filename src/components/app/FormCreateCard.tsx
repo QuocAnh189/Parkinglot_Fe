@@ -17,8 +17,10 @@ import { RFIDReaderInput } from "rfid-reader-input";
 //icon
 import { BiRfid } from "react-icons/bi";
 
-//interface
+//enum
 import { ECardType, EVehicleType } from "@constants/enum";
+
+//interface
 import { CreateCardPayload, UpdateCardPayload } from "@interfaces/card";
 
 interface IProps {

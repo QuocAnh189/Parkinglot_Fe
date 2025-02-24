@@ -9,13 +9,16 @@ import { setAuth } from "@redux/slices/auth";
 
 //components
 import { toast, ToastContainer } from "react-toastify";
+import Loading from "@components/common/Loading";
 
 //assets
 import logo from "@assets/logo.png";
 
 //interfaces
 import { SingInPayload } from "@interfaces/auth";
-import Loader from "@components/common/Loader";
+
+//icon
+import { EyeIcon, EyeOff } from "lucide-react";
 
 const initForm: SingInPayload = {
   email: "",
@@ -28,6 +31,7 @@ const SignIn = () => {
 
   const [Login, { isLoading }] = useSignInMutation();
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [form, setForm] = useState<SingInPayload>(initForm);
 
   const handleChangeForm = (name: string, value: any) => {
@@ -93,17 +97,31 @@ const SignIn = () => {
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Password
                 </label>
-                <input
-                  value={form.password}
-                  type="password"
-                  name="password"
-                  id="password"
-                  onChange={(e) => {
-                    handleChangeForm("password", e.target.value);
-                  }}
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                />
+                <div className="relative">
+                  <input
+                    value={form.password}
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    onChange={(e) => {
+                      handleChangeForm("password", e.target.value);
+                    }}
+                    placeholder="••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                  <button
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                    className="absolute right-3 top-[50%] translate-y-[-50%] hover:cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <EyeIcon width={20} />
+                    ) : (
+                      <EyeOff width={20} />
+                    )}
+                  </button>
+                </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-start">
@@ -130,7 +148,7 @@ const SignIn = () => {
                 onClick={handleLogin}
                 className="w-full text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                {isLoading ? "Loading..." : "Sign in"}
+                {isLoading ? <Loading /> : "Sign in"}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet?{" "}
@@ -140,11 +158,7 @@ const SignIn = () => {
                   }}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  {isLoading ? (
-                    <Loader width="20" height="20" />
-                  ) : (
-                    "Create an account"
-                  )}
+                  Create an account
                 </button>
               </p>
             </div>

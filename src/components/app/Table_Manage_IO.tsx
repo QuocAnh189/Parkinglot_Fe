@@ -34,6 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@components/ui/table";
+import Paging from "./Pagination";
 
 //interface
 import { columnsIO } from "@constants/columns_io";
@@ -41,8 +42,10 @@ import { IListIOHistoryRequest } from "@interfaces/io_history";
 
 //redux
 import { useGetIOHistoriesQuery } from "@redux/services/in_out";
+
+//enum
 import { ECardType, EVehicleType } from "@constants/enum";
-import Paging from "./Pagination";
+import { Input } from "@components/ui/input";
 
 const initParams: IListIOHistoryRequest = {
   type: "",
@@ -53,6 +56,7 @@ const initParams: IListIOHistoryRequest = {
   order_by: "",
   order_desc: false,
   take_all: false,
+  date: "",
 };
 
 const DataTableManageIO = () => {
@@ -134,6 +138,23 @@ const DataTableManageIO = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="">
+            <Label htmlFor="name" className="text-right">
+              Ngày
+            </Label>
+            <Input
+              type="date"
+              placeholder="Tìm kiếm..."
+              className="w-[300px]"
+              onChange={(e) => {
+                setParams((prevParams) => ({
+                  ...prevParams,
+                  date: e.target.value,
+                }));
+              }}
+            />
           </div>
         </div>
         <div className="space-x-5 flex justify-end w-full">

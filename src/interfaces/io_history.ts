@@ -16,6 +16,7 @@ export interface IListIOHistoryRequest {
   type: string;
   card_type: string;
   vehicle_type: string;
+  date: string;
   page: number;
   size: number;
   order_by: string;

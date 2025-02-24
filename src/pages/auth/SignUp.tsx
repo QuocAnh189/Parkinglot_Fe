@@ -7,7 +7,7 @@ import { useSignUpMutation } from "@redux/services/auth";
 
 //components
 import { toast, ToastContainer } from "react-toastify";
-import Loader from "@components/common/Loader";
+import Loading from "@components/common/Loading";
 
 //asset
 import logo from "@assets/logo.png";
@@ -16,6 +16,9 @@ import logo from "@assets/logo.png";
 import { SignUpPayload } from "@interfaces/auth";
 import { setAuth } from "@redux/slices/auth";
 import { useAppDispatch } from "@redux/hook";
+
+//icon
+import { EyeIcon, EyeOff } from "lucide-react";
 
 const initForm: SignUpPayload = {
   email: "",
@@ -28,6 +31,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [form, setForm] = useState<SignUpPayload>(initForm);
 
   const [Register, { isLoading }] = useSignUpMutation();
@@ -97,6 +101,7 @@ const SignUp = () => {
                   }}
                 />
               </div>
+
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   User Name
@@ -113,21 +118,36 @@ const SignUp = () => {
                   }}
                 />
               </div>
+
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Password
                 </label>
-                <input
-                  value={form.password}
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Enter Password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) => {
-                    handleChangeForm("password", e.target.value);
-                  }}
-                />
+                <div className="relative">
+                  <input
+                    value={form.password}
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    onChange={(e) => {
+                      handleChangeForm("password", e.target.value);
+                    }}
+                    placeholder="••••••••"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  />
+                  <button
+                    onClick={() => {
+                      setShowPassword(!showPassword);
+                    }}
+                    className="absolute right-3 top-[50%] translate-y-[-50%] hover:cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <EyeIcon width={20} />
+                    ) : (
+                      <EyeOff width={20} />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <div>
@@ -150,12 +170,9 @@ const SignUp = () => {
                 onClick={handleRegister}
                 className="w-full text-white bg-blue-500 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                {isLoading ? (
-                  <Loader width="20" height="20" />
-                ) : (
-                  "Create an account"
-                )}
+                {isLoading ? <Loading /> : "Create an account"}
               </button>
+
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{" "}
                 <button
