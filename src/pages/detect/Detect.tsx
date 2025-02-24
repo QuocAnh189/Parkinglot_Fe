@@ -32,6 +32,10 @@ import { IIOHistory } from "@interfaces/io_history";
 import no_image from "@assets/noimage.jpg";
 import { ETypeHistory } from "@constants/enum";
 
+const videoConstraints = {
+  facingMode: "user",
+};
+
 const Detect = () => {
   const webRef1 = useRef<any>(null);
   const webRef2 = useRef<any>(null);
@@ -229,13 +233,9 @@ const Detect = () => {
               mirrored={true}
               className="w-full"
               ref={webRef1}
-              videoConstraints={{
-                facingMode: "user",
-                deviceId: "8812DD64-DD23-45AA-A0DB-0D231D6DFF4E",
-              }}
-              audioConstraints={{
-                deviceId: "8812DD64-DD23-45AA-A0DB-0D231D6DFF4E",
-              }}
+              audio={false}
+              videoConstraints={videoConstraints}
+              onUserMediaError={(err) => console.error("Webcam Error: ", err)}
             />
           )}
         </div>
@@ -247,15 +247,9 @@ const Detect = () => {
               mirrored={true}
               className="w-full"
               ref={webRef2}
-              videoConstraints={{
-                facingMode: "user",
-                deviceId:
-                  "04c091c5182d2194a6948e7866c0e1565cb6bc931c3080971e42bacce4ae37a3",
-              }}
-              audioConstraints={{
-                deviceId:
-                  "04c091c5182d2194a6948e7866c0e1565cb6bc931c3080971e42bacce4ae37a3",
-              }}
+              audio={false}
+              videoConstraints={videoConstraints}
+              onUserMediaError={(err) => console.error("Webcam Error: ", err)}
             />
           )}
         </div>
