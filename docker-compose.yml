@@ -20,12 +20,12 @@ services:
     build:
       context: .
       args:
-        VITE_API_URL: "http://139.59.250.218:8002/api/v1"
+        VITE_API_URL: "https://goparking.duckdns.org/api/"
     ports:
       - "8003:80"
       - "443:443"
     environment:
-      - VITE_API_URL=http://139.59.250.218:8002/api/v1
+      - VITE_API_URL=https://goparking.duckdns.org/api/
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - /etc/letsencrypt/live/goparking.duckdns.org/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
