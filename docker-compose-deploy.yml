@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        VITE_API_URL: "https://goparking.duckdns.org:8443/api/v1"
+    ports:
+      - "8003:80"
+      - "443:443"
+    environment:
+      - VITE_API_URL=https://goparking.duckdns.org:8443/api/v1
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt/live/goparking.duckdns.org/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /etc/letsencrypt/live/goparking.duckdns.org/privkey.pem:/etc/nginx/ssl/privkey.pem:ro
+    restart: unless-stopped
