@@ -10,6 +10,7 @@ const AvatarUser = (props: IProps) => {
   return (
     <Avatar>
       <AvatarImage
+        className="object-cover"
         src={avatar_url ? avatar_url : "https://github.com/shadcn.png"}
         alt="@shadcn"
       />
