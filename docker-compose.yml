@@ -22,7 +22,7 @@ services:
       args:
         VITE_API_URL: "http://139.59.250.218:8002/api/v1"
     ports:
-      - "80:80"
+      - "8003:80"
       - "443:443"
     environment:
       - VITE_API_URL=http://139.59.250.218:8002/api/v1
