@@ -1,50 +1,40 @@
-# React + TypeScript + Vite
+# EventHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+===========================================================
 
-Currently, two official plugins are available:
+### Features :
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Authentication and Authorization (SignIn - SignUp)
+2. Manage Card (CRUD Card)
+3. Manage IOHistory (CRUD IOHistory)
+4. Check Entrance - Exit (RFID)
 
-## Expanding the ESLint configuration
+### Screen :
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![iamgedemo](https://res.cloudinary.com/dadvtny30/image/upload/v1740559345/parking/z1kpgooc82mlon9c7si5.png)
 
-- Configure the top-level `parserOptions` property like this:
+#### App demo :
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+https://goparking.duckdns.org/
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# 1. How to run the app (Development Environment)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the repo and cd into it
+2. In your terminal `npm install` (npm >= 18)
+3. Rename or copy `.env.example` file to `.env`
+4. Run `npm run dev` local dev environment.
+5. Visit `localhost:3000` in your browser
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Relate Source
+
+- Parkinglot_BE: https://github.com/QuocAnh189/Parkinglot_Fe
+- Detect_License_Plate: https://github.com/QuocAnh189/Detect_License_Plate
+
+## Author Contact
+
+Contact me with any questions!<br>
+
+Email: anquoc18092003@gmail.com
+Facebook: https://www.facebook.com/tranphuocanhquoc2003
+
+<p style="text-align:center">Thank You so much for your time !!!</p>

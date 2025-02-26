@@ -79,10 +79,8 @@ const Detect = () => {
       if (result) {
         console.log(result);
         if (stateInOut === ETypeHistory.IN) {
-          console.log("IN");
           setEntranceResult(result);
         } else {
-          console.log("OUT");
           setEntranceResult(result.data_in);
           setExitResult(result.data_out);
         }
