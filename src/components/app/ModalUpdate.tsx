@@ -41,7 +41,7 @@ interface IProps {
 const ModalUpdate = (props: IProps) => {
   const { isOpen, setIsOpen, cardId } = props;
 
-  const { data: card } = useGetCardQuery(cardId);
+  const { data: card, isSuccess } = useGetCardQuery(cardId);
 
   const [formCard, setFormCard] = useState<UpdateCardPayload>(initForm);
   const [UpdateCard, { isLoading }] = useUpdateCardMutation();
@@ -80,25 +80,29 @@ const ModalUpdate = (props: IProps) => {
 
   return (
     <>
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Cập nhập Thẻ</DialogTitle>
-            <DialogDescription>Điền đầy đủ thông tin của thẻ</DialogDescription>
-          </DialogHeader>
-          {formCard.rfid && (
-            <FormCreateCard
-              handleChangeForm={handleChangeForm}
-              formCard={formCard}
-            />
-          )}
-          <DialogFooter>
-            <Button disabled={isLoading} type="button" onClick={handleSubmit}>
-              {isLoading ? <Loading /> : "Cập nhập"}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {isSuccess && (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Cập nhập Thẻ</DialogTitle>
+              <DialogDescription>
+                Điền đầy đủ thông tin của thẻ
+              </DialogDescription>
+            </DialogHeader>
+            {formCard.rfid && (
+              <FormCreateCard
+                handleChangeForm={handleChangeForm}
+                formCard={formCard}
+              />
+            )}
+            <DialogFooter>
+              <Button disabled={isLoading} type="button" onClick={handleSubmit}>
+                {isLoading ? <Loading /> : "Cập nhập"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
       <ToastContainer />
     </>
   );

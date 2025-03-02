@@ -5,22 +5,29 @@ import routes from "@constants/routes";
 //component
 import Link from "@components/common/Link";
 import AvatarUser from "@components/common/Avatar";
+import Loading from "@components/common/Loading";
+import { Button } from "@components/ui/button";
 
+//redux
+import { useSignOutMutation } from "@redux/services/auth";
 import { useAppDispatch } from "@redux/hook";
 import { setAuth } from "@redux/slices/auth";
-
-import { Button } from "@components/ui/button";
 
 const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const [SignOut, { isLoading }] = useSignOutMutation();
 
-  const handleLogout = () => {
-    dispatch(setAuth(null));
-    localStorage.removeItem("token");
-    navigate("/");
+  const handleLogout = async () => {
+    const result = await SignOut();
+    if (result) {
+      console.log("result: ");
+      dispatch(setAuth(null));
+      localStorage.removeItem("token");
+      navigate("/");
+    }
   };
 
   return (
@@ -38,7 +45,7 @@ const Layout = () => {
             <p>{user?.name}</p>
           </div>
           <Button onClick={handleLogout} className="hover:cursor-pointer">
-            Logout
+            {isLoading ? <Loading /> : "Logout"}
           </Button>
         </div>
       </header>

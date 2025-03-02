@@ -33,6 +33,11 @@ export const apiAuth = createApi({
       query: () => ({
         url: "/auth/signout",
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("token")!).accessToken
+          }`,
+        },
       }),
       transformResponse: (response: any) => response.data,
       transformErrorResponse: (error) => error.data,
