@@ -1,8 +1,8 @@
 # Stage 1: Build React app
 FROM node:18.18.0 AS build
 
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
+# ARG VITE_API_URL
+# ENV VITE_API_URL=$VITE_API_URL
 
 WORKDIR /app
 
